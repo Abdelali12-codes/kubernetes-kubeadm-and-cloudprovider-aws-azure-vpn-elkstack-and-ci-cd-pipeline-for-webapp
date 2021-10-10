@@ -151,7 +151,7 @@ openssl x509 -req -in request.csr -CA kubernetes.crt -CAkey kubernetes.key -out 
 - set the cluster name and the server
 
 ```
-kubectl config ser-cluster name-of-cluster --server = url
+kubectl config set-cluster name-of-cluster --server = url
 ```
 
 - set the context of the user

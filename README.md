@@ -25,6 +25,12 @@ chmod +x ./install
 sudo ./install auto
 ```
 
+# create the tag for aws resources
+
+```
+kubernetes.io/cluster/kubernetes
+```
+
 # Set up the kubernetes cluster
 
 ### 1. run the following command on the both instances you created above
@@ -71,6 +77,7 @@ sudo nano /etc/docker/daemon.json
 ```
 
 ```
+* run the below commands to apply the changes
 sudo systemctl restart docker
 sudo systemctl enable docker
 ```

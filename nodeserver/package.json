@@ -1,0 +1,26 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "babel-plugin-import": "1.13.3",
+    "body-parser": "1.19.0",
+    "cookie-parser": "1.4.5",
+    "express": "4.17.1",
+    "express-session": "1.17.2",
+    "immutable": "3.8.2",
+    "mime": "2.5.2",
+    "mongoose": "5.13.5",
+    "morgan": "1.10.0",
+    "multer": "1.4.3",
+    "nodemon": "^2.0.12",
+    "uuid": "8.3.2"
+  },
+  "author": "",
+  "license": "ISC"
+}

@@ -1,0 +1,17 @@
+version: 0.0
+os: linux
+files:
+  - source: /
+    destination: /home/abdelali/devops
+hooks:
+    AfterInstall:
+       - location: scripts/copy-files.sh
+         timeout: 300
+         runas: abdelali
+    ApplicationStart:
+       - location: scripts/run-ansible-playbook.sh
+         timeout: 3600
+         runas: abdelali
+
+    
+       

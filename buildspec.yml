@@ -1,0 +1,27 @@
+version: 0.2
+phases:
+      install:
+       commands:
+          - echo `date`
+          - echo "Installing something"
+      pre_build:
+        commands:
+          - echo "the prebuild phase"
+          - npm install
+      build:
+        commands:
+          - echo `date`
+          - echo "the build phase"
+          - npm run build
+      post_build:
+        commands: 
+           - echo "we are in the post build phase"
+
+artifacts:
+   files:
+     - build/**/*
+     - appspec.yml
+     - scripts/*
+     - nginx/*
+     - ansible/*
+     - nodeserver/**/*

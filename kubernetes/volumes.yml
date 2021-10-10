@@ -1,0 +1,22 @@
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: my-pvc
+spec:
+  storageClassName: my-strclass
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 7Gi
+---
+kind: StorageClass
+apiVersion: storage.k8s.io/v1
+metadata:
+  name: my-strclass
+provisioner: kubernetes.io/aws-ebs
+parameters:
+  type: gp2
+  zone: us-west-2a
+  iopsPerGB: "100"
+

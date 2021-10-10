@@ -1,0 +1,124 @@
+apiVersion: apps/v1
+kind: Deployment 
+metadata:
+  name: mongo-db
+spec:
+  selector:
+    matchLabels:
+      app: mongo-db
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: mongo-db
+    spec:
+      containers:
+      - name: mongo-db
+        image: mongo
+        ports:
+        - containerPort: 27017
+        volumeMounts:
+          - mountPath: /data/db
+            name: host-volume
+      
+      volumes:
+        - name: host-volume
+          hostPath:
+            path: /home/ubuntu/volumes
+            type: DirectoryOrCreate
+                                          # this the path on the worker node where your web site resie
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongo-db
+  labels:
+    app: mongo-db
+spec:
+  selector:
+    app: mongo-db
+  type: ClusterIP
+  ports:
+  - port: 27017
+    targetPort: 27017
+
+
+--- 
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: node-app
+spec:
+  selector:
+    matchLabels:
+      app: node-app
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: node-app
+    spec:
+      containers:
+      - name: node-app
+        image: abdelalidocker/nodejs-pipeline:latest
+        ports:
+        - containerPort: 3001
+
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: node-app
+  labels:
+    app: node-app
+spec:
+  selector:
+   app: node-app
+  type: ClusterIP
+  ports:
+  - port: 3001
+    targetPort: 3001
+
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-app
+spec:
+  selector:
+    matchLabels:
+      app: nginx-app
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: nginx-app
+    spec:
+      containers:
+      - name: nginx-app
+        image: abdelalidocker/reactjs-pipeline:latest
+        ports:
+        - containerPort: 80
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-app
+  labels:
+    app: nginx-app
+spec:
+  selector:
+   app: nginx-app
+  type: NodePort
+  ports:
+  - port: 80
+    targetPort: 80
+    protocol: TCP
+    nodePort: 30700

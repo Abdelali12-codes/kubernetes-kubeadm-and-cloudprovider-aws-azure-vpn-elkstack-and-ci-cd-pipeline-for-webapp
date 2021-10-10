@@ -1,0 +1,14 @@
+apiVersion: kubeadm.k8s.io/v1beta2
+kind: JoinConfiguration
+discovery:
+ bootstrapToken:
+   token: "fo5a6l.r2ggq2vpuquz0u0w"
+   apiServerEndpoint: "10.10.1.227:6443"
+   caCertHashes:
+     - "sha256:056a474af642e4f683239c958914504925ca9a1da35aa67c25c8dfe10a9c3d24"
+nodeRegistration:
+ name: ip-10-10-1-168.us-west-2.compute.internal
+ kubeletExtraArgs:
+   cloud-provider: aws
+
+# kubeadm join --config /etc/kubernetes/node.yaml

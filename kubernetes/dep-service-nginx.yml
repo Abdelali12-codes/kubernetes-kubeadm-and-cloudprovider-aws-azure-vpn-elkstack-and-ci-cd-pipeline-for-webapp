@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+  labels:
+    app: nginx
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - mountPath: /var/www/html
+          name: mypd
+      volumes:
+      # - name: host-volume
+      #   hostPath:
+      #     path: /home/ubuntu/volumes
+      #     type: DirectoryOrCreate
+    
+        - name: mypd
+          persistentVolumeClaim:
+            claimName: my-pvc
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-server-webapp
+spec:
+  # type: NodePort
+  type: LoadBalancer
+  selector:
+    app: nginx
+  ports:
+    - protocol: TCP
+      # nodePort: 30400
+      # targetPort: 27017
+      targetPort: 80
+      port: 80

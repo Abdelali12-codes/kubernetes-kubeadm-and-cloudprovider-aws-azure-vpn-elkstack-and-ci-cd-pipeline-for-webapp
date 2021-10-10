@@ -79,10 +79,6 @@ sudo systemctl enable docker
 
 - make sure that the kubelet and the container runtime have the same cgroup driver (it must be now systemd)
 
-```
-sudo docker info | grep -i cgroup
-```
-
 - create aws.yml file under /etc/kubernetes/ copy and paste to it the below
 
 ```
@@ -109,6 +105,25 @@ sudo kubeadm init --config /etc/kubernetes/aws.yml
 
 sudo kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
 
+```
+
+### join the worker nodes to the cluster
+
+- create node.yml under /etc/kubernetes in the worker node you want to join it to the cluster
+
+```
+apiVersion: kubeadm.k8s.io/v1beta2
+kind: JoinConfiguration
+discovery:
+  bootstrapToken:
+    token: "1egdvy.cnkm4u65vaijwu1r"
+    apiServerEndpoint: "10.10.1.40:6443 "
+    caCertHashes:
+      - "sha256:b0546d2e377eb4790ae983bfb77d07dfed966aafbf9c0a3207782e169d6a6251"
+nodeRegistration:
+  name: ip-10-10-1-244.us-west-2.compute.internal
+  kubeletExtraArgs:
+    cloud-provider: aws
 ```
 
 # kubernetes RBAC

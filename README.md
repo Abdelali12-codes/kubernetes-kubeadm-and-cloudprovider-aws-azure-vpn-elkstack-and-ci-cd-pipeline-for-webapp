@@ -109,7 +109,7 @@ sudo kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Do
 
 ### join the worker nodes to the cluster
 
-- create node.yml under /etc/kubernetes in the worker node you want to join it to the cluster
+- create node.yml file under /etc/kubernetes in the worker node you want to join it to the cluster
 
 ```
 apiVersion: kubeadm.k8s.io/v1beta2

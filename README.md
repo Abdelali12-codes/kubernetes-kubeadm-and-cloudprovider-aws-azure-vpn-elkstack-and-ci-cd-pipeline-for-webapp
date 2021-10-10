@@ -70,8 +70,10 @@ sudo nano /etc/docker/daemon.json
   }
 ```
 
+```
 sudo systemctl restart docker
 sudo systemctl enable docker
+```
 
 ### 3. initialization of the master node run the command below (run this command only on the master node)
 

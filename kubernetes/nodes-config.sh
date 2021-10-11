@@ -18,10 +18,9 @@ EOF
 sudo apt-get update
 sudo apt-get install -y kubelet kubeadm kubectl
 sudo apt-mark hold kubelet kubeadm kubectl
-
+sudo apt install docker.io -y
 # Install Docker and change the cgroup driver to systemd.
 
-sudo apt install docker.io -y
 
 sudo cat > /etc/docker/daemon.json <<EOF
 {

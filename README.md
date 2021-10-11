@@ -135,7 +135,7 @@ nodeRegistration:
 
 # kubernetes RBAC
 
-- create pricate key for the user
+- create private key for the user
 
 ```
 openssl genrsa -out private-key.key 2048
@@ -143,14 +143,16 @@ openssl genrsa -out private-key.key 2048
 
 - create certificate sign request (csr)
 
+* comment RANDFILE = $ENV::HOME/.rnd line in /etc/ssl/openssl.cnf
+
 ```
-openssl req -new -key private-key.key -out request.csr -subj "/CN=abdelali /O="
+openssl req -new -key private-key.key -out request.csr -subj "/CN=abdelali/O=abdelali"
 ```
 
 - sign the generated certificate by the kubernetes admin
 
 ```
-openssl x509 -req -in request.csr -CA kubernetes.crt -CAkey kubernetes.key -out abdelali.crt -days 365 -CAcreateserial
+openssl x509 -req -in request.csr -CA kubernetes.crt -CAkey kubernetes.key -CAcreateserial -out abdelali.crt -days 365
 ```
 
 ### set the kubernetes cluster and the context
@@ -158,7 +160,7 @@ openssl x509 -req -in request.csr -CA kubernetes.crt -CAkey kubernetes.key -out 
 - set the cluster name and the server
 
 ```
-kubectl config set-cluster name-of-cluster --server = url
+kubectl config set-cluster name-of-cluster --server =url
 ```
 
 - set the context of the user
@@ -176,11 +178,11 @@ kubectl config use-context my-context
 - set the certificate and the private key of the user
 
 ```
-kubectl config set-credentials abdelali --client-certificate= /home/abdelali/abdelali.crt --client-key= /home/abdelali/private-key.key
+kubectl config set-credentials abdelali --client-certificate=/home/abdelali/kubernetes/abdelali.crt --client-key=/home/abdelali/kubernetes/private-key.key
 ```
 
 - set the certificate authority for the cluster
 
 ```
-kubectl config set-cluster name-of-cluster --certificate-authority= /home/abdelali/kubernetes.crt
+kubectl config set-cluster name-of-cluster --certificate-authority=/home/abdelali/kubernetes/kubernetes.crt
 ```

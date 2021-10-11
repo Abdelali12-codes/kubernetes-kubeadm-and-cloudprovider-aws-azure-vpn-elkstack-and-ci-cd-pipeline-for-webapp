@@ -2,11 +2,11 @@ apiVersion: kubeadm.k8s.io/v1beta2
 kind: JoinConfiguration
 discovery:
   bootstrapToken:
-    token: "1egdvy.cnkm4u65vaijwu1r"
-    apiServerEndpoint: "10.10.1.40:6443 "
+    token: "dr63oy.avcrs2k33ucab4ov"
+    apiServerEndpoint: "10.10.1.26:6443"
     caCertHashes:
-      - "sha256:b0546d2e377eb4790ae983bfb77d07dfed966aafbf9c0a3207782e169d6a6251"
+      - "sha256:2fa5c276f7e43bc9a50df9b5e3ad940ae659b3c85bb82280cfdd8dd1cfe9faf1"
 nodeRegistration:
-  name: ip-10-10-1-244.us-west-2.compute.internal
+  name: ip-10-10-1-147.us-west-2.compute.internal
   kubeletExtraArgs:
     cloud-provider: aws

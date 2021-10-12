@@ -24,4 +24,4 @@ artifacts:
      - scripts/*
      - nginx/*
      - ansible/*
-     - nodeserver/**/*
+     

@@ -228,10 +228,10 @@ kubectl config set-cluster name-of-cluster --certificate-authority=/home/abdelal
 
 ```
 
-aws_access_key_id: secret-key-id
-aws_secret_access_key: secret-access-key
-iam_user_arn: iam-user-arn
-region: supported-region
+aws_access_key_id: AKIARFMB6SUSKPW43KEI
+aws_secret_access_key: 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
+iam_user_arn: arn:aws:iam::080266302756:user/root
+region: us-west-2
 
 ```
 
@@ -239,7 +239,7 @@ region: supported-region
 
 ```
 
-export AWS_REGION=supported-region
+export AWS_REGION=us-west-2
 
 ```
 
@@ -247,8 +247,8 @@ export AWS_REGION=supported-region
 
 ```
 
-sudo yum install ruby -y
-sudo yum install wget -y
+sudo apt install ruby -y
+sudo apt install wget -y
 cd /home/abdelali
 wget https://aws-codedeploy-us-east-1.s3.amazonaws.com/latest/install
 chmod +x ./install
@@ -271,7 +271,7 @@ pip install awscli
 
 ```
 
-sudo yum install awscli
+sudo yum install awscli -y or sudo apt install awscli -y
 
 ```
 
@@ -279,7 +279,7 @@ sudo yum install awscli
 
 ```
 
-aws deploy register-on-premises-instance --instance-name AssetTag12010298EX --iam-user-arn arn:aws:iam::444455556666:user/CodeDeployUser-OnPrem
+aws deploy register-on-premises-instance --instance-name AssetTag12010298EX --iam-user-arn arn:aws:iam::080266302756:user/root
 
 ```
 

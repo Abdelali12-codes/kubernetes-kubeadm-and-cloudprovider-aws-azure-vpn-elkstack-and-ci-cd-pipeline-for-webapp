@@ -1,8 +1,8 @@
 version: 0.0
-os: linux
+os: ubuntu
 files:
   - source: /
-    destination: /home/abdelali/devops
+    destination: /home/azureuser/devops
 hooks:
     AfterInstall:
        - location: scripts/copy-files.sh

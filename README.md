@@ -124,10 +124,18 @@ nodeRegistration:
 
 # kubernetes RBAC
 
+- create the user on ubuntu
+
+```
+sudo useradd -s /bin/bash -d /home/abdelali/ -m -G sudo abdelali
+```
+
 - create private key for the user
 
 ```
+
 openssl genrsa -out private-key.key 2048
+
 ```
 
 - create certificate sign request (csr)
@@ -135,13 +143,17 @@ openssl genrsa -out private-key.key 2048
 * comment RANDFILE = $ENV::HOME/.rnd line in /etc/ssl/openssl.cnf
 
 ```
+
 openssl req -new -key private-key.key -out request.csr -subj "/CN=abdelali/O=abdelali"
+
 ```
 
 - sign the generated certificate by the kubernetes admin
 
 ```
+
 openssl x509 -req -in request.csr -CA kubernetes.crt -CAkey kubernetes.key -CAcreateserial -out abdelali.crt -days 365
+
 ```
 
 ### set the kubernetes cluster and the context
@@ -149,31 +161,41 @@ openssl x509 -req -in request.csr -CA kubernetes.crt -CAkey kubernetes.key -CAcr
 - set the cluster name and the server
 
 ```
+
 kubectl config set-cluster name-of-cluster --server =url
+
 ```
 
 - set the context of the user
 
 ```
+
 kubectl config set-context my-context --user abdelali --cluster name-of-cluster
+
 ```
 
 - set the current context
 
 ```
+
 kubectl config use-context my-context
+
 ```
 
 - set the certificate and the private key of the user
 
 ```
+
 kubectl config set-credentials abdelali --client-certificate=/home/abdelali/kubernetes/abdelali.crt --client-key=/home/abdelali/kubernetes/private-key.key
+
 ```
 
 - set the certificate authority for the cluster
 
 ```
+
 kubectl config set-cluster name-of-cluster --certificate-authority=/home/abdelali/kubernetes/kubernetes.crt
+
 ```
 
 # configure the azure vm to register it to codedeploy on-premise instances
@@ -185,27 +207,33 @@ kubectl config set-cluster name-of-cluster --certificate-authority=/home/abdelal
 ## 3. create codedeploy.onpremises.yml under /etc/codedeploy-agent/conf
 
 ```
+
 aws_access_key_id: secret-key-id
 aws_secret_access_key: secret-access-key
 iam_user_arn: iam-user-arn
 region: supported-region
+
 ```
 
 ## 4. Set the AWS_REGION environment variable (Ubuntu Server and RHEL only)
 
 ```
+
 export AWS_REGION=supported-region
+
 ```
 
 ## 5. install the codedeploy agent
 
 ```
+
 sudo yum install ruby -y
 sudo yum install wget -y
 cd /home/abdelali
 wget https://aws-codedeploy-us-east-1.s3.amazonaws.com/latest/install
 chmod +x ./install
 sudo ./install auto
+
 ```
 
 ## 6. Install and configure the AWS CLI
@@ -213,14 +241,18 @@ sudo ./install auto
 - using pip
 
 ```
+
 sudo yum install python-pip
 pip install awscli
+
 ```
 
 - or
 
 ```
+
 sudo yum install awscli
+
 ```
 
 ## 7. register azure vm to codedeploy on-premise
@@ -228,6 +260,10 @@ sudo yum install awscli
 ```
 
 aws deploy register-on-premises-instance --instance-name AssetTag12010298EX --iam-user-arn arn:aws:iam::444455556666:user/CodeDeployUser-OnPrem
+
+```
+
+```
 
 ```
 

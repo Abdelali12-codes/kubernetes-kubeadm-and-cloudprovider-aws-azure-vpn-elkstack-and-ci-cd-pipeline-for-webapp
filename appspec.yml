@@ -7,11 +7,11 @@ hooks:
     AfterInstall:
        - location: scripts/copy-files.sh
          timeout: 300
-         runas: abdelali
+         runas: azureuser
     ApplicationStart:
        - location: scripts/run-ansible-playbook.sh
          timeout: 3600
-         runas: abdelali
+         runas: azureuser
 
     
        

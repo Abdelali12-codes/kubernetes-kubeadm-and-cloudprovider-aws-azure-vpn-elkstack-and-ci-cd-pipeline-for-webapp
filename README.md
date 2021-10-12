@@ -14,10 +14,30 @@ sudo apt-get install jenkins
 sudo service jenkins start
 ```
 
+# setup ansible server
+
+- make sure to install the ansible software as a root !!
+
+- if you are on ubuntu
+
+```
+sudo su
+apt install python-pip -y
+pip install ansible
+```
+
+- if you are on amazon linux or centos or redhat
+
+```
+sudo su
+yum install python-pip -y
+pip install ansible
+```
+
 # create the tag for aws resources
 
 ```
-kubernetes.io/cluster/kubernetes
+key= kubernetes.io/cluster/kubernetes and value= owned
 ```
 
 # Set up the kubernetes cluster

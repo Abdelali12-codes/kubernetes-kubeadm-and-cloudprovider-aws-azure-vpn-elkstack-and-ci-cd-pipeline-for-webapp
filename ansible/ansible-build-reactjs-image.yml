@@ -6,17 +6,17 @@
 
   tasks:
   - name: build image
-    command: docker build -t reactjs-pipeline .
+    command: docker build -t azure-reactjs .
     args:
        chdir: /home/abdelali/devops/nginx
 
   - name: tag the image
-    command: docker tag reactjs-pipeline abdelalidocker/reactjs-pipeline:latest
+    command: docker tag azure-reactjs abdelalidocker/azure-reactjs:latest
 
 
   - name: push the built image to dockerhub
-    command: docker push abdelalidocker/reactjs-pipeline:latest
+    command: docker push abdelalidocker/azure-reactjs:latest
 
 
   - name: delete the built image and the taged one
-    command: docker rmi reactjs-pipeline abdelalidocker/reactjs-pipeline:latest
+    command: docker rmi azure-reactjs abdelalidocker/azure-reactjs:latest

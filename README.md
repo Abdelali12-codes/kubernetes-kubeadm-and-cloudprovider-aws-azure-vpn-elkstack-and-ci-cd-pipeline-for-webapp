@@ -14,17 +14,6 @@ sudo apt-get install jenkins
 sudo service jenkins start
 ```
 
-# install the codedeploy agent
-
-```
-sudo yum install ruby -y
-sudo yum install wget -y
-cd /home/abdelali
-wget https://aws-codedeploy-us-east-1.s3.amazonaws.com/latest/install
-chmod +x ./install
-sudo ./install auto
-```
-
 # create the tag for aws resources
 
 ```
@@ -185,4 +174,63 @@ kubectl config set-credentials abdelali --client-certificate=/home/abdelali/kube
 
 ```
 kubectl config set-cluster name-of-cluster --certificate-authority=/home/abdelali/kubernetes/kubernetes.crt
+```
+
+# configure the azure vm to register it to codedeploy on-premise instances
+
+## 1. create policies for the user
+
+## 2. create the user and save the access and secret key (download the csv file)
+
+## 3. create codedeploy.onpremises.yml under /etc/codedeploy-agent/conf
+
+```
+aws_access_key_id: secret-key-id
+aws_secret_access_key: secret-access-key
+iam_user_arn: iam-user-arn
+region: supported-region
+```
+
+## 4. Set the AWS_REGION environment variable (Ubuntu Server and RHEL only)
+
+```
+export AWS_REGION=supported-region
+```
+
+## 5. install the codedeploy agent
+
+```
+sudo yum install ruby -y
+sudo yum install wget -y
+cd /home/abdelali
+wget https://aws-codedeploy-us-east-1.s3.amazonaws.com/latest/install
+chmod +x ./install
+sudo ./install auto
+```
+
+## 6. Install and configure the AWS CLI
+
+- using pip
+
+```
+sudo yum install python-pip
+pip install awscli
+```
+
+- or
+
+```
+sudo yum install awscli
+```
+
+## 7. register azure vm to codedeploy on-premise
+
+```
+
+aws deploy register-on-premises-instance --instance-name AssetTag12010298EX --iam-user-arn arn:aws:iam::444455556666:user/CodeDeployUser-OnPrem
+
+```
+
+```
+
 ```

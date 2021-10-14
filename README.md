@@ -283,10 +283,48 @@ aws deploy register-on-premises-instance --instance-name AssetTag12010298EX --ia
 
 ```
 
+# elk stack
+
+## elasticsearch
+
+- Download and install the public signing key:
+
 ```
+wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -
+```
+
+- You may need to install the apt-transport-https package on Debian before proceeding:
+
+```
+sudo apt-get install apt-transport-https
 
 ```
 
+- Save the repository definition to /etc/apt/sources.list.d/elastic-7.x.list:
+
+```
+echo "deb https://artifacts.elastic.co/packages/7.x/apt stable main" | sudo tee /etc/apt/sources.list.d/elastic-7.x.list
+
 ```
 
+- You can install the Elasticsearch Debian package with:
+
+```
+sudo apt-get update && sudo apt-get install elasticsearch
+```
+
+## kibana
+
+- if you run kibana and elasticsearch in the same machine so you need just to run the below command
+
+```
+sudo apt-get update && sudo apt-get install kibana
+```
+
+- if you run kibana in seperate machine so you need to follow the same steps as you did with elasticesearch
+
+```
+wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -
+echo "deb https://artifacts.elastic.co/packages/7.x/apt stable main" | sudo tee /etc/apt/sources.list.d/elastic-7.x.list
+sudo apt-get update && sudo apt-get install kibana
 ```

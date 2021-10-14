@@ -325,6 +325,30 @@ sudo apt-get update && sudo apt-get install kibana
 
 ```
 wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -
+sudo apt-get install apt-transport-https
 echo "deb https://artifacts.elastic.co/packages/7.x/apt stable main" | sudo tee /etc/apt/sources.list.d/elastic-7.x.list
 sudo apt-get update && sudo apt-get install kibana
+```
+
+## logstash on ubuntu
+
+```
+wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -
+sudo apt-get install apt-transport-https
+echo "deb https://artifacts.elastic.co/packages/7.x/apt stable main" | sudo tee /etc/apt/sources.list.d/elastic-7.x.list
+sudo apt-get update && sudo apt-get install logstash
+```
+
+- configure the file
+
+- get to /usr/share/logstash and run the command below
+
+```
+bin/logstash -f /etc/logstash/conf.d/nginx.conf
+```
+
+## logstash on docker
+
+```
+
 ```

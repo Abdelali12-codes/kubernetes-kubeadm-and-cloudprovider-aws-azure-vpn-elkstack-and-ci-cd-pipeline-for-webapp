@@ -228,8 +228,8 @@ kubectl config set-cluster name-of-cluster --certificate-authority=/home/abdelal
 
 ```
 
-aws_access_key_id: AKIARFMB6SUSKPW43KEI
-aws_secret_access_key: 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
+aws_access_key_id: xxxxxxxxxxxxxxxxxx
+aws_secret_access_key: xxxxxxxxxxxxxxxxxxxxx
 iam_user_arn: arn:aws:iam::080266302756:user/root
 region: us-west-2
 

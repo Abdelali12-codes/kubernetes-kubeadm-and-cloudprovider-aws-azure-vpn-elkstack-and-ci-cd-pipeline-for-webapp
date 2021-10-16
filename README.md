@@ -283,6 +283,12 @@ aws deploy register-on-premises-instance --instance-name AssetTag12010298EX --ia
 
 ```
 
+## 8. deregister azure vm from codedeploy on-premise
+
+```
+aws deploy deregister-on-premises-instance --instance-name AssetTag12010298EX
+```
+
 # elk stack
 
 ## elasticsearch
@@ -290,12 +296,15 @@ aws deploy register-on-premises-instance --instance-name AssetTag12010298EX --ia
 - Download and install the public signing key:
 
 ```
+
 wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -
+
 ```
 
 - You may need to install the apt-transport-https package on Debian before proceeding:
 
 ```
+
 sudo apt-get install apt-transport-https
 
 ```
@@ -303,6 +312,7 @@ sudo apt-get install apt-transport-https
 - Save the repository definition to /etc/apt/sources.list.d/elastic-7.x.list:
 
 ```
+
 echo "deb https://artifacts.elastic.co/packages/7.x/apt stable main" | sudo tee /etc/apt/sources.list.d/elastic-7.x.list
 
 ```
@@ -310,7 +320,9 @@ echo "deb https://artifacts.elastic.co/packages/7.x/apt stable main" | sudo tee 
 - You can install the Elasticsearch Debian package with:
 
 ```
+
 sudo apt-get update && sudo apt-get install elasticsearch
+
 ```
 
 ## kibana
@@ -318,25 +330,31 @@ sudo apt-get update && sudo apt-get install elasticsearch
 - if you run kibana and elasticsearch in the same machine so you need just to run the below command
 
 ```
+
 sudo apt-get update && sudo apt-get install kibana
+
 ```
 
 - if you run kibana in seperate machine so you need to follow the same steps as you did with elasticesearch
 
 ```
+
 wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -
 sudo apt-get install apt-transport-https
 echo "deb https://artifacts.elastic.co/packages/7.x/apt stable main" | sudo tee /etc/apt/sources.list.d/elastic-7.x.list
 sudo apt-get update && sudo apt-get install kibana
+
 ```
 
 ## logstash on ubuntu
 
 ```
+
 wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -
 sudo apt-get install apt-transport-https
 echo "deb https://artifacts.elastic.co/packages/7.x/apt stable main" | sudo tee /etc/apt/sources.list.d/elastic-7.x.list
 sudo apt-get update && sudo apt-get install logstash
+
 ```
 
 - configure the file
@@ -344,7 +362,9 @@ sudo apt-get update && sudo apt-get install logstash
 - get to /usr/share/logstash and run the command below
 
 ```
+
 bin/logstash -f /etc/logstash/conf.d/nginx.conf
+
 ```
 
 ## logstash on docker
@@ -352,3 +372,5 @@ bin/logstash -f /etc/logstash/conf.d/nginx.conf
 ```
 
 ```
+
+# Synchronize users between AWS Microsoft AD and Azure AD

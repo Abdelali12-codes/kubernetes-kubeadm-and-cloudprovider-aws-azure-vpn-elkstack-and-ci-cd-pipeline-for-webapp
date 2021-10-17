@@ -164,6 +164,7 @@ sudo chown $(id -u):$(id -g) $HOME/.kube/config
 ![k8s-ha](https://user-images.githubusercontent.com/67081878/137641124-7e830311-e36b-41dc-bade-eb02c04b89b6.png)
 
 
+
 # reset the cluster
 
 * run the below commands as the rooot
@@ -280,7 +281,10 @@ kubeadm certs certificate-key
 kubeadm token list
 kubeadm token create
 ```
-
+* or
+```
+kubeadm token create --print-join-command
+```
 ## to obtain the the value of --discovery-token-ca-cert-hash
 ```
 openssl x509 -pubkey -in /etc/kubernetes/pki/ca.crt | openssl rsa -pubin -outform der 2>/dev/null | openssl dgst -sha256 -hex | sed 's/^.* //'

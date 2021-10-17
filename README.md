@@ -144,6 +144,21 @@ nodeRegistration:
     cloud-provider: aws
 ```
 
+# reset the cluster
+
+* run the below commands as the rooot
+
+```
+kubeadm reset
+```
+* reset the iptables
+```
+iptables -F && iptables -t nat -F && iptables -t mangle -F && iptables -X
+apt-get update && apt install ipvsadm -y
+ipvsadm -C
+```
+
+
 # kubernetes RBAC
 
 - create the user on ubuntu
@@ -251,7 +266,14 @@ kubeadm token create
 openssl x509 -pubkey -in /etc/kubernetes/pki/ca.crt | openssl rsa -pubin -outform der 2>/dev/null | openssl dgst -sha256 -hex | sed 's/^.* //'
 ```
 
-## ssh-agent and ssh-add to avoid the 
+## ssh-agent and ssh-add to avoid the prompt to ask you the password frequently
+
+* ssh-agent
+```
+eval $(ssh-agent)
+```
+
+
 
 # configure the azure vm to register it to codedeploy on-premise instances
 

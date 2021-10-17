@@ -155,7 +155,7 @@ sudo apt-get update
 sudo apt-get install -y kubectl
 ```
 
-* copy the config file from the master node to the 
+* copy the config file from the master node to the admin node
 ```
 mkdir -p $HOME/.kube
 sudo scp  root@ip-addres:/etc/kubernetes/admin.conf $HOME/.kube/config

@@ -251,6 +251,8 @@ kubeadm token create
 openssl x509 -pubkey -in /etc/kubernetes/pki/ca.crt | openssl rsa -pubin -outform der 2>/dev/null | openssl dgst -sha256 -hex | sed 's/^.* //'
 ```
 
+## ssh-agent and ssh-add to avoid the 
+
 # configure the azure vm to register it to codedeploy on-premise instances
 
 ## 1. create policies for the user

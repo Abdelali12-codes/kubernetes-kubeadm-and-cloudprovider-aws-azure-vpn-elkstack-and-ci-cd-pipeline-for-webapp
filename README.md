@@ -85,8 +85,9 @@ sudo nano /etc/docker/daemon.json
   }
 ```
 
-```
+
 * run the below commands to apply the changes
+```
 sudo systemctl restart docker
 sudo systemctl enable docker
 ```

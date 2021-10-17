@@ -2,7 +2,7 @@ apiVersion: kubeadm.k8s.io/v1beta2
 kind: JoinConfiguration
 discovery:
   bootstrapToken:
-    token: 123456.a4v4ii39rupz51j3
+    token: "123456.a4v4ii39rupz51j3"
     apiServerEndpoint: "cp-lb.us-west-2.elb.amazonaws.com:6443"
     caCertHashes: ["sha256:082feed98fb5fd2b497472fb7d9553414e27ff7eeb7b919c82ff3a08fdf5782f"]
 nodeRegistration:

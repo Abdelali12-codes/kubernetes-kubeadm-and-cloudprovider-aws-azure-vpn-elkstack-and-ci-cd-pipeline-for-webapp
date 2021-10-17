@@ -113,7 +113,7 @@ clusterName: kubernetes
 
 ```
 
-sudo kubeadm init --config /etc/kubernetes/aws.yml
+sudo kubeadm init --config /etc/kubernetes/aws.yml --upload-certs
 
 ### 4. install the flannel network plugin on the control plane (master node in our case)
 
@@ -216,6 +216,37 @@ kubectl config set-credentials abdelali --client-certificate=/home/abdelali/kube
 
 kubectl config set-cluster name-of-cluster --certificate-authority=/home/abdelali/kubernetes/kubernetes.crt
 
+```
+# Kubeernetes Settings 
+
+## Controlling your cluster from machines other than the control-plane node
+```
+scp root@<control-plane-host>:/etc/kubernetes/admin.conf .
+kubectl --kubeconfig ./admin.conf get nodes
+```
+
+## Proxying API Server to localhost 
+```
+scp root@<control-plane-host>:/etc/kubernetes/admin.conf .
+kubectl --kubeconfig ./admin.conf proxy
+```
+
+## to obtain the value of certificate-jey to join your other master node to k8s cluster
+
+```
+kubeadm certs certificate-key
+```
+
+## to obtain the of --token 
+
+```
+kubeadm token list
+kubeadm token create
+```
+
+## to obtain the the value --discovery-token-ca-cert-hash
+```
+openssl x509 -pubkey -in /etc/kubernetes/pki/ca.crt | openssl rsa -pubin -outform der 2>/dev/null | openssl dgst -sha256 -hex | sed 's/^.* //'
 ```
 
 # configure the azure vm to register it to codedeploy on-premise instances

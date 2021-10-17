@@ -3,7 +3,8 @@ kind: JoinConfiguration
 discovery:
   bootstrapToken:
     token: "dr63oy.avcrs2k33ucab4ov"
-    apiServerEndpoint: "10.10.1.26:6443"
+    apiServerEndpoint: "10.10.1.26:6443" # controlplaneendpoint: 6443
+    # the control
     caCertHashes:
       - "sha256:2fa5c276f7e43bc9a50df9b5e3ad940ae659b3c85bb82280cfdd8dd1cfe9faf1"
 nodeRegistration:

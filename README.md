@@ -237,14 +237,14 @@ kubectl --kubeconfig ./admin.conf proxy
 kubeadm certs certificate-key
 ```
 
-## to obtain the of --token 
+## to obtain the value of --token 
 
 ```
 kubeadm token list
 kubeadm token create
 ```
 
-## to obtain the the value --discovery-token-ca-cert-hash
+## to obtain the the value of --discovery-token-ca-cert-hash
 ```
 openssl x509 -pubkey -in /etc/kubernetes/pki/ca.crt | openssl rsa -pubin -outform der 2>/dev/null | openssl dgst -sha256 -hex | sed 's/^.* //'
 ```

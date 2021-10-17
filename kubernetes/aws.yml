@@ -12,4 +12,4 @@ controllerManager:
   extraArgs:
     cloud-provider: aws
 clusterName: kubernetes
-controlPlaneEndpoint: class-load-balancer-505618943.us-west-2.elb.amazonaws.com # this the dns name of the load balancer
+# controlPlaneEndpoint: class-load-balancer-505618943.us-west-2.elb.amazonaws.com # this the dns name of the load balancer

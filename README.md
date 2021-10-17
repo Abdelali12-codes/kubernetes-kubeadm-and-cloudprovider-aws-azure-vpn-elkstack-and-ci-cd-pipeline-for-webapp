@@ -143,6 +143,24 @@ nodeRegistration:
   kubeletExtraArgs:
     cloud-provider: aws
 ```
+# setting the admin node of the cluster
+
+* install the kubectl (tool to interact with our cluster)
+```
+sudo apt-get update
+sudo apt-get install -y apt-transport-https ca-certificates curl
+sudo curl -fsSLo /usr/share/keyrings/kubernetes-archive-keyring.gpg https://packages.cloud.google.com/apt/doc/apt-key.gpg
+echo "deb [signed-by=/usr/share/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list
+sudo apt-get update
+sudo apt-get install -y kubectl
+```
+
+* copy the config file from the master node to the 
+```
+mkdir -p $HOME/.kube
+sudo scp  root@ip-addres:/etc/kubernetes/admin.conf $HOME/.kube/config
+sudo chown $(id -u):$(id -g) $HOME/.kube/config
+```
 
 # reset the cluster
 

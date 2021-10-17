@@ -1,0 +1,35 @@
+apiVersion: kubeadm.k8s.io/v1beta1
+kind: ClusterConfiguration
+apiServer:
+  extraArgs:
+    cloud-provider: aws
+clusterName: test
+controlPlaneEndpoint: k8s-elb-1152547997.us-west-2.elb.amazonaws.com
+controllerManager:
+  extraArgs:
+    cloud-provider: aws
+    configure-cloud-routes: "false"
+    address: 0.0.0.0
+etcd:
+  external:
+    endpoints:
+    - https://172.31.33.122:2379
+    - https://172.31.42.99:2379
+    - https://172.31.46.92:2379
+    caFile: /etc/kubernetes/pki/etcd/ca.crt
+    certFile: /etc/kubernetes/pki/apiserver-etcd-client.crt
+    keyFile: /etc/kubernetes/pki/apiserver-etcd-client.key
+kubernetesVersion: v1.13.2
+networking:
+  dnsDomain: cluster.local
+  podSubnet: 192.168.0.0/16
+  serviceSubnet: 10.96.0.0/12
+scheduler:
+  extraArgs:
+    address: 0.0.0.0
+---
+apiVersion: kubeadm.k8s.io/v1beta1
+kind: InitConfiguration
+nodeRegistration:
+  kubeletExtraArgs:
+    cloud-provider: aws

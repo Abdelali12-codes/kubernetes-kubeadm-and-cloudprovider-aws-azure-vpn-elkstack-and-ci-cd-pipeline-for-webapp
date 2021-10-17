@@ -161,6 +161,8 @@ mkdir -p $HOME/.kube
 sudo scp  root@ip-addres:/etc/kubernetes/admin.conf $HOME/.kube/config
 sudo chown $(id -u):$(id -g) $HOME/.kube/config
 ```
+![k8s-ha](https://user-images.githubusercontent.com/67081878/137641124-7e830311-e36b-41dc-bade-eb02c04b89b6.png)
+
 
 # reset the cluster
 

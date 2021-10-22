@@ -8,6 +8,13 @@ $(curl -s http://169.254.169.254/latest/meta-data/local-hostname)
 # sudo swapoff -a
 # sudo sed -i.bak -r 's/(.+ swap .+)/#\1/' /etc/fstab
 
+# curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
+# cat <<EOF | sudo tee /etc/apt/sources.list.d/kubernetes.list
+# deb https://apt.kubernetes.io/ kubernetes-xenial main
+# EOF
+
+# sudo curl -fsSLo /usr/share/keyrings/kubernetes-archive-keyring.gpg https://packages.cloud.google.com/apt/doc/apt-key.gpg
+# echo "deb [signed-by=/usr/share/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list
 # install kubelet, kubeadm and kubectl 
 
 sudo apt-get update && sudo apt-get install -y apt-transport-https curl

@@ -85,8 +85,8 @@ sudo nano /etc/docker/daemon.json
   }
 ```
 
+- run the below commands to apply the changes
 
-* run the below commands to apply the changes
 ```
 sudo systemctl restart docker
 sudo systemctl enable docker
@@ -143,9 +143,11 @@ nodeRegistration:
   kubeletExtraArgs:
     cloud-provider: aws
 ```
+
 # setting the admin node of the cluster
 
-* install the kubectl (tool to interact with our cluster)
+- install the kubectl (tool to interact with our cluster)
+
 ```
 sudo apt-get update
 sudo apt-get install -y apt-transport-https ca-certificates curl
@@ -155,30 +157,23 @@ sudo apt-get update
 sudo apt-get install -y kubectl
 ```
 
-* copy the config file from the master node to the admin node
+- copy the config file from the master node to the admin node
+
 ```
 mkdir -p $HOME/.kube
 sudo scp  root@ip-addres:/etc/kubernetes/admin.conf $HOME/.kube/config
 sudo chown $(id -u):$(id -g) $HOME/.kube/config
 ```
+
 ![k8s-ha](https://user-images.githubusercontent.com/67081878/137641124-7e830311-e36b-41dc-bade-eb02c04b89b6.png)
-
-
 
 # reset the cluster
 
-* run the below commands as the rooot
+- run the below commands as the rooot
 
 ```
 kubeadm reset
 ```
-* reset the iptables
-```
-iptables -F && iptables -t nat -F && iptables -t mangle -F && iptables -X
-apt-get update && apt install ipvsadm -y
-ipvsadm -C
-```
-
 
 # kubernetes RBAC
 
@@ -255,15 +250,18 @@ kubectl config set-credentials abdelali --client-certificate=/home/abdelali/kube
 kubectl config set-cluster name-of-cluster --certificate-authority=/home/abdelali/kubernetes/kubernetes.crt
 
 ```
-# Kubeernetes Settings 
+
+# Kubeernetes Settings
 
 ## Controlling your cluster from machines other than the control-plane node
+
 ```
 scp root@<control-plane-host>:/etc/kubernetes/admin.conf .
 kubectl --kubeconfig ./admin.conf get nodes
 ```
 
-## Proxying API Server to localhost 
+## Proxying API Server to localhost
+
 ```
 scp root@<control-plane-host>:/etc/kubernetes/admin.conf .
 kubectl --kubeconfig ./admin.conf proxy
@@ -275,29 +273,32 @@ kubectl --kubeconfig ./admin.conf proxy
 kubeadm certs certificate-key
 ```
 
-## to obtain the value of --token 
+## to obtain the value of --token
 
 ```
 kubeadm token list
 kubeadm token create
 ```
-* or
+
+- or
+
 ```
 kubeadm token create --print-join-command
 ```
+
 ## to obtain the the value of --discovery-token-ca-cert-hash
+
 ```
 openssl x509 -pubkey -in /etc/kubernetes/pki/ca.crt | openssl rsa -pubin -outform der 2>/dev/null | openssl dgst -sha256 -hex | sed 's/^.* //'
 ```
 
 ## ssh-agent and ssh-add to avoid the prompt to ask you the password frequently
 
-* ssh-agent
+- ssh-agent
+
 ```
 eval $(ssh-agent)
 ```
-
-
 
 # configure the azure vm to register it to codedeploy on-premise instances
 
@@ -452,6 +453,31 @@ bin/logstash -f /etc/logstash/conf.d/nginx.conf
 
 ```
 
+```
+
+# provide password-protected access to your kibana
+
+- install the below packages
+
+```
+sudo add-apt-repository ppa:certbot/certbot
+sudo apt-get update
+sudo apt-get install nginx apache2-utils
+sudo apt-get install python-certbot-nginx
+sudo certbot --nginx -d my-elk-stack-vps.com
+```
+
+- run the below command in the directory (/etc/nginx) and enter your password
+
+```
+sudo htpasswd -c /etc/nginx/htpasswd.users kibanaadmin
+```
+
+- if you are using nginx on ubuntu go under /etc/nginx/sites-enabled/default and paste the below lines
+
+```
+auth_basic "Restricted Access";
+auth_basic_user_file /etc/nginx/htpasswd.users;
 ```
 
 # Synchronize users between AWS Microsoft AD and Azure AD

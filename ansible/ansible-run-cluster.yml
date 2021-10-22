@@ -7,9 +7,9 @@
   tasks:
 
   - name: create the depolyments and services
-    command: kubectl apply -f deployments-services.yml
+    command: kubectl apply -f dep-service-nginx.yml
     args: 
        chdir: /home/ubuntu/cluster
 
   - name: restart the nginx app deployment
-    command: kubectl rollout restart deployment nginx-app
+    command: kubectl rollout restart deployment nginx-deployment

@@ -310,9 +310,9 @@ eval $(ssh-agent)
 
 ```
 
-aws_access_key_id: xxxxxxxxxxxxxxxxxx
-aws_secret_access_key: xxxxxxxxxxxxxxxxxxxxx
-iam_user_arn: arn:aws:iam::xxxxxxxxxx:user/azure
+aws_access_key_id: xxxxxxxxxxxxxx
+aws_secret_access_key: xxxxxxxxxxxxxxxxxxxxxx
+iam_user_arn: arn:aws:iam::xxxxxxxxxxxxxxx:user/root
 region: us-west-2
 
 ```
@@ -357,11 +357,17 @@ sudo yum install awscli -y or sudo apt install awscli -y
 
 ```
 
+- configure your user on azure vm
+
+```
+aws configure
+```
+
 ## 7. register azure vm to codedeploy on-premise
 
 ```
 
-aws deploy register-on-premises-instance --instance-name AssetTag12010298EX --iam-user-arn arn:aws:iam::xxxxxxxxxxxx:user/root
+aws deploy register-on-premises-instance --instance-name AssetTag12010298EX --iam-user-arn arn:aws:iam::xxxxxxxxxxxxxxx:user/root
 
 ```
 

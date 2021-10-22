@@ -20,13 +20,13 @@ spec:
         ports:
         - containerPort: 80
         volumeMounts:
-          - mountPath: /var/log/nginx
-            name: host-volume
+        - mountPath: /var/log/nginx
+          name: host-volume
       volumes:
-        - name: host-volume
-          hostPath:
-            path: /home/ubuntu/logs
-            type: DirectoryOrCreate
+      - name: host-volume
+        hostPath:
+          path: /home/ubuntu/logs
+          type: DirectoryOrCreate
       #   volumeMounts:
       #   - mountPath: /var/www/html
       #     name: mypd

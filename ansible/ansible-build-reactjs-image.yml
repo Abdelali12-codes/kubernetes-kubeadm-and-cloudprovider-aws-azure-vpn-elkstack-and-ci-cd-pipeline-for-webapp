@@ -8,7 +8,7 @@
   - name: build image
     command: docker build -t azure-reactjs .
     args:
-       chdir: /home/abdelali/devops/nginx
+       chdir: /home/azureuser/devops/nginx
 
   - name: tag the image
     command: docker tag azure-reactjs abdelalidocker/azure-reactjs:latest

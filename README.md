@@ -361,7 +361,7 @@ sudo yum install awscli -y or sudo apt install awscli -y
 
 ```
 
-aws deploy register-on-premises-instance --instance-name AssetTag12010298EX --iam-user-arn arn:aws:iam::080266302756:user/root
+aws deploy register-on-premises-instance --instance-name AssetTag12010298EX --iam-user-arn arn:aws:iam::xxxxxxxxxxxx:user/root
 
 ```
 

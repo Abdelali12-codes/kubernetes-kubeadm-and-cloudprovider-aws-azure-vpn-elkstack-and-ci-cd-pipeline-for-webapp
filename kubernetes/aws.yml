@@ -6,7 +6,7 @@ networking:
   serviceSubnet: "10.100.0.0/16"
   podSubnet: "10.244.0.0/16"
 clusterName: kubernetes
-controlPlaneEndpoint: classic-load-balancer-833162346.us-west-2.elb.amazonaws.com
+# controlPlaneEndpoint: classic-load-balancer-833162346.us-west-2.elb.amazonaws.com
 # apiServer:
 #   extraArgs:
 #     cloud-provider: aws

@@ -26,10 +26,14 @@ sudo apt-get update
 sudo apt-get install -y kubelet kubeadm kubectl
 sudo apt-mark hold kubelet kubeadm kubectl
 sudo apt install docker.io -y
-# Install Docker and change the cgroup driver to systemd.
 
 
-sudo cat > /etc/docker/daemon.json <<EOF
+
+sudo nano /etc/docker/daemon.json
+
+#change the cgroup driver to systemd.
+# copy the below json code and paste it in the daemon.json file
+
 {
   "exec-opts": ["native.cgroupdriver=systemd"],
   "log-driver": "json-file",
@@ -38,7 +42,7 @@ sudo cat > /etc/docker/daemon.json <<EOF
   },
   "storage-driver": "overlay2"
 }
-EOF
+
 
 sudo systemctl restart docker
 sudo systemctl enable docker

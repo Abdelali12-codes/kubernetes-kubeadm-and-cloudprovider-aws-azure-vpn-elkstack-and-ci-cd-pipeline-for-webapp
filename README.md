@@ -34,39 +34,7 @@ key= kubernetes.io/cluster/kubernetes and value= owned
 sudo hostnamectl set-hostname name-of-the-host
 ```
 
-### 1. run the following command on the both instances you created above
-
-- look at the node-conf.sh file under kubernetes foler of the project
-
-### 2. initialization of the master node run the command below (run this command only on the master node)
-
-- look at the aws.yml file under kubernetes folder of the project
-
-- after finishing the previous step, run the below command
-
-* for kubeadm integration with aws run the below command
-
-```
-sudo kubeadm init --config /etc/kubernetes/aws.yml --upload-certs
-```
-
-- for kubeadm without aws run below command as root
-
-```
-kubeadm init --control-plane-endpoint="server-ip:6443" --apiserver-advertise-address= master-ip-addres --pod-network-cidr= 10.244.0.0/16 --upload-certs
-```
-
-### 3. join the worker nodes and masternode to the cluster
-
-- if you integrated kubeadm with aws provider go to the node.yml under kubernetes folder to join your woker node to the cluster
-
-- else run the command that appear when you initiate the kubeadm
-
-- if you integrated kubeadm with aws provider go to the controller.yml under kubernetes folder to join your master node to the cluster
-
-* else run the command that appear when you initiate the kubeadm
-
-### 4. set up the loadbalancer for the k8s cluster HAproxy
+### 1. set up the loadbalancer for the k8s cluster HAproxy
 
 - install haproxy software
 
@@ -91,6 +59,38 @@ backend kubernetes-backend
     server master2 172.16.16.223:6443 check fall 3 rise 2
 
 ```
+
+### 2. run the following command on the instances of the clusters
+
+- look at the node-conf.sh file under kubernetes foler of the project
+
+### 3. initialization of the master node run the command below (run this command only on the master node)
+
+- look at the aws.yml file under kubernetes folder of the project
+
+- after finishing the previous step, run the below command
+
+* for kubeadm integration with aws run the below command
+
+```
+sudo kubeadm init --config /etc/kubernetes/aws.yml --upload-certs
+```
+
+- for kubeadm without aws run below command as root
+
+```
+kubeadm init --control-plane-endpoint="server-ip:6443" --apiserver-advertise-address= master-ip-addres --pod-network-cidr= 10.244.0.0/16 --upload-certs
+```
+
+### 4. join the worker nodes and masternode to the cluster
+
+- if you integrated kubeadm with aws provider go to the node.yml under kubernetes folder to join your woker node to the cluster
+
+- else run the command that appear when you initiate the kubeadm
+
+- if you integrated kubeadm with aws provider go to the controller.yml under kubernetes folder to join your master node to the cluster
+
+* else run the command that appear when you initiate the kubeadm
 
 ### 5. install the flannel network plugin on the control plane (master node in our case)
 
@@ -123,7 +123,6 @@ sudo chown $(id -u):$(id -g) $HOME/.kube/config
 - copy the /etc/kubernetes/admin.conf file to the admin host under $HOME/.kube/config (watch the lab on my youtube to understand how i achieved that)
 
 ![haproxy](https://user-images.githubusercontent.com/67081878/138596740-a9842526-b649-4d90-b70e-8959469d35cf.png)
-
 
 # kubernetes RBAC
 

@@ -28,6 +28,12 @@ key= kubernetes.io/cluster/kubernetes and value= owned
 
 # Set up the kubernetes cluster
 
+- set up the hostname for the masters and worker nodes
+
+```
+sudo hostnamectl set-hostname name-of-the-host
+```
+
 ### 1. run the following command on the both instances you created above
 
 - look at the node-conf.sh file under kubernetes foler of the project

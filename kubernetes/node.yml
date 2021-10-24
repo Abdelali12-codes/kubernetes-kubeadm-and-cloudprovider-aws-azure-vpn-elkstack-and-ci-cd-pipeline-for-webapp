@@ -1,3 +1,5 @@
+
+# create this file under /etc/kubernetes on your worker node
 apiVersion: kubeadm.k8s.io/v1beta2
 kind: JoinConfiguration
 discovery:
@@ -10,7 +12,3 @@ nodeRegistration:
   name: ip-176-24-1-134.us-west-2.compute.internal
   kubeletExtraArgs:
     cloud-provider: aws
-# controlPlane:
-#   localAPIEndpoint:
-#     advertiseAddress: 10.10.1.67
-#   certificateKey: "c6a817c94ded55a3c497cd7fe599274adfbd23eeb93ce3eb8e8ca800610002ce"

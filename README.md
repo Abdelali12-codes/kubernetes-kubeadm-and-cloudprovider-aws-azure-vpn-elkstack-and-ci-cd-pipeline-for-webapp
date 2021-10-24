@@ -1,19 +1,5 @@
 # aws-pipeline-kubernetes-jenkins-ansible-dockerhub-domaincontroller-vpn-coporate-datacentre-reactjs
 
-# setup jenkins on ubuntu ec2 instance image
-
-```
-sudo apt-get update
-sudo apt-get install openjdk-8-jdk -y
-sudo apt-get install -y apt-transport-https ca-certificates curl software-properties-common
-wget -q -O - https://pkg.jenkins.io/debian/jenkins.io.key | sudo apt-key add -
-sudo sh -c 'echo deb https://pkg.jenkins.io/debian binary/ > \
-    /etc/apt/sources.list.d/jenkins.list'
-sudo apt-get update
-sudo apt-get install jenkins
-sudo service jenkins start
-```
-
 # setup ansible server
 
 - make sure to install the ansible software as a root !!
@@ -44,78 +30,25 @@ key= kubernetes.io/cluster/kubernetes and value= owned
 
 ### 1. run the following command on the both instances you created above
 
-- setup a new hostname
-
-```
-sudo hostnamectl set-hostname \
-$(curl -s http://169.254.169.254/latest/meta-data/local-hostname)
-```
-
-- install kubelet, kubeadm and kubectl
-
-```
-sudo apt-get update && sudo apt-get install -y apt-transport-https curl
-curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
-cat <<EOF | sudo tee /etc/apt/sources.list.d/kubernetes.list
-deb https://apt.kubernetes.io/ kubernetes-xenial main
-EOF
-sudo apt-get update
-sudo apt-get install -y kubelet kubeadm kubectl
-sudo apt-mark hold kubelet kubeadm kubectl
-sudo apt install docker.io -y
-
-```
-
-- edit the docker daemon file to change the cgroudriver to systemd instead of cgroufs
-
-```
-sudo nano /etc/docker/daemon.json
-```
-
-- copy and paste the below content
-
-```
-  {
-  "exec-opts": ["native.cgroupdriver=systemd"],
-  "log-driver": "json-file",
-  "log-opts": {
-  "max-size": "100m"
-  },
-  "storage-driver": "overlay2"
-  }
-```
-
-- run the below commands to apply the changes
-
-```
-sudo systemctl restart docker
-sudo systemctl enable docker
-```
+- look at the node-conf.sh file under kubernetes foler of the project
 
 ### 3. initialization of the master node run the command below (run this command only on the master node)
 
-- make sure that the kubelet and the container runtime have the same cgroup driver (it must be now systemd)
+- look at the aws.yml file under kubernetes folder of the project
 
-- create aws.yml file under /etc/kubernetes/ copy and paste to it the below
+- after finishing the previous step, run the below command
 
-```
-apiVersion: kubeadm.k8s.io/v1beta2
-kind: ClusterConfiguration
-networking:
-  serviceSubnet: 10.100.0.0/16
-  podSubnet: 10.244.0.0/16
-apiServer:
-  extraArgs:
-    cloud-provider: aws
-controllerManager:
-  extraArgs:
-    cloud-provider: aws
-clusterName: kubernetes
-controlPlaneEndpoint: cp-lb.us-west-2.elb.amazonaws.com #this the dns name of the load balancer
+* for kubeadm integration with aws run the below command
 
 ```
-
 sudo kubeadm init --config /etc/kubernetes/aws.yml --upload-certs
+```
+
+- for kubeadm without aws run below command as root
+
+```
+kubeadm init --control-plane-endpoint="server-ip:6443" --apiserver-advertise-address= master-ip-addres --pod-network-cidr= 10.244.0.0/16 --upload-certs
+```
 
 ### 4. install the flannel network plugin on the control plane (master node in our case)
 
@@ -125,23 +58,32 @@ sudo kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Do
 
 ```
 
-### join the worker nodes to the cluster
+### join the worker nodes and masternode to the cluster
 
-- create node.yml file under /etc/kubernetes in the worker node you want to join it to the cluster
+- if you integrated kubeadm with aws provider go to the node.yml under kubernetes folder to join your woker node to the cluster
+
+- else run the command that appear when you initiate the kubeadm
+
+- if you integrated kubeadm with aws provider go to the controller.yml under kubernetes folder to join your master node to the cluster
+
+* else run the command that appear when you initiate the kubeadm
+
+# set up the loadbalancer for the k8s cluster HAproxy
 
 ```
-apiVersion: kubeadm.k8s.io/v1beta2
-kind: JoinConfiguration
-discovery:
-  bootstrapToken:
-    token: "1egdvy.cnkm4u65vaijwu1r"
-    apiServerEndpoint: "10.10.1.40:6443 "
-    caCertHashes:
-      - "sha256:b0546d2e377eb4790ae983bfb77d07dfed966aafbf9c0a3207782e169d6a6251"
-nodeRegistration:
-  name: ip-10-10-1-244.us-west-2.compute.internal
-  kubeletExtraArgs:
-    cloud-provider: aws
+frontend kubernetes-frontend
+    bind 10.10.1.172:6443
+    mode tcp
+    option tcplog
+    default_backend kubernetes-backend
+
+backend kubernetes-backend
+    mode tcp
+    option tcp-check
+    balance roundrobin
+    server master1 10.10.1.16:6443 check fall 3 rise 2
+    server master2 172.16.16.223:6443 check fall 3 rise 2
+
 ```
 
 # setting the admin node of the cluster
@@ -161,19 +103,12 @@ sudo apt-get install -y kubectl
 
 ```
 mkdir -p $HOME/.kube
-sudo scp  root@ip-addres:/etc/kubernetes/admin.conf $HOME/.kube/config
 sudo chown $(id -u):$(id -g) $HOME/.kube/config
 ```
 
+- copy the /etc/kubernetes/admin.conf file to the admin host under $HOME/.kube/config (watch the lab on my youtube to understand how i achieved that)
+
 ![k8s-ha](https://user-images.githubusercontent.com/67081878/137641124-7e830311-e36b-41dc-bade-eb02c04b89b6.png)
-
-# reset the cluster
-
-- run the below commands as the rooot
-
-```
-kubeadm reset
-```
 
 # kubernetes RBAC
 
@@ -253,20 +188,6 @@ kubectl config set-cluster name-of-cluster --certificate-authority=/home/abdelal
 
 # Kubeernetes Settings
 
-## Controlling your cluster from machines other than the control-plane node
-
-```
-scp root@<control-plane-host>:/etc/kubernetes/admin.conf .
-kubectl --kubeconfig ./admin.conf get nodes
-```
-
-## Proxying API Server to localhost
-
-```
-scp root@<control-plane-host>:/etc/kubernetes/admin.conf .
-kubectl --kubeconfig ./admin.conf proxy
-```
-
 ## to obtain the value of certificate-jey to join your other master node to k8s cluster
 
 ```
@@ -290,14 +211,6 @@ kubeadm token create --print-join-command
 
 ```
 openssl x509 -pubkey -in /etc/kubernetes/pki/ca.crt | openssl rsa -pubin -outform der 2>/dev/null | openssl dgst -sha256 -hex | sed 's/^.* //'
-```
-
-## ssh-agent and ssh-add to avoid the prompt to ask you the password frequently
-
-- ssh-agent
-
-```
-eval $(ssh-agent)
 ```
 
 # configure the azure vm to register it to codedeploy on-premise instances
@@ -384,33 +297,10 @@ aws deploy deregister-on-premises-instance --instance-name AssetTag12010298EX
 - Download and install the public signing key:
 
 ```
-
 wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -
-
-```
-
-- You may need to install the apt-transport-https package on Debian before proceeding:
-
-```
-
 sudo apt-get install apt-transport-https
-
-```
-
-- Save the repository definition to /etc/apt/sources.list.d/elastic-7.x.list:
-
-```
-
 echo "deb https://artifacts.elastic.co/packages/7.x/apt stable main" | sudo tee /etc/apt/sources.list.d/elastic-7.x.list
-
-```
-
-- You can install the Elasticsearch Debian package with:
-
-```
-
 sudo apt-get update && sudo apt-get install elasticsearch
-
 ```
 
 ## kibana

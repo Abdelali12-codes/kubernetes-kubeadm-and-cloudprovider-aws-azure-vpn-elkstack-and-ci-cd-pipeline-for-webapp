@@ -1,7 +1,7 @@
 version: "3"
 services:
   logstash:
-    container_name: nginx_app
+    container_name: nginx-logstash
     build:
       context: ./
       dockerfile: Dockerfile

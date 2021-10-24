@@ -116,7 +116,8 @@ sudo chown $(id -u):$(id -g) $HOME/.kube/config
 
 - copy the /etc/kubernetes/admin.conf file to the admin host under $HOME/.kube/config (watch the lab on my youtube to understand how i achieved that)
 
-![k8s-ha](https://user-images.githubusercontent.com/67081878/137641124-7e830311-e36b-41dc-bade-eb02c04b89b6.png)
+![download-removebg-preview](https://user-images.githubusercontent.com/67081878/138596670-0b7f3db6-bbc6-4a76-81f2-17cb049bdcc6.png)
+
 
 # kubernetes RBAC
 

@@ -32,7 +32,7 @@ key= kubernetes.io/cluster/kubernetes and value= owned
 
 - look at the node-conf.sh file under kubernetes foler of the project
 
-### 3. initialization of the master node run the command below (run this command only on the master node)
+### 2. initialization of the master node run the command below (run this command only on the master node)
 
 - look at the aws.yml file under kubernetes folder of the project
 
@@ -50,15 +50,7 @@ sudo kubeadm init --config /etc/kubernetes/aws.yml --upload-certs
 kubeadm init --control-plane-endpoint="server-ip:6443" --apiserver-advertise-address= master-ip-addres --pod-network-cidr= 10.244.0.0/16 --upload-certs
 ```
 
-### 4. install the flannel network plugin on the control plane (master node in our case)
-
-```
-
-sudo kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
-
-```
-
-### join the worker nodes and masternode to the cluster
+### 3. join the worker nodes and masternode to the cluster
 
 - if you integrated kubeadm with aws provider go to the node.yml under kubernetes folder to join your woker node to the cluster
 
@@ -68,7 +60,15 @@ sudo kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Do
 
 * else run the command that appear when you initiate the kubeadm
 
-# set up the loadbalancer for the k8s cluster HAproxy
+### 4. set up the loadbalancer for the k8s cluster HAproxy
+
+- install haproxy software
+
+```
+sudo apt-get update && sudo apt-get install haproxy -y
+```
+
+- copy and paste the below content in /etc/haproxy/haproxy.conf
 
 ```
 frontend kubernetes-frontend
@@ -86,7 +86,15 @@ backend kubernetes-backend
 
 ```
 
-# setting the admin node of the cluster
+### 5. install the flannel network plugin on the control plane (master node in our case)
+
+```
+
+sudo kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
+
+```
+
+### 6. setting the admin node of the cluster
 
 - install the kubectl (tool to interact with our cluster)
 

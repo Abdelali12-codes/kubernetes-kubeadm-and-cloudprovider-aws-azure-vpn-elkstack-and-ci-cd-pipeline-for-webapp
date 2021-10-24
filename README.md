@@ -120,6 +120,8 @@ sudo chown $(id -u):$(id -g) $HOME/.kube/config
 
 # kubernetes RBAC
 
+## 1. Create the user and generate the private key, certificate signing requets and sign the certificate by the kubernetes certificate authority by the admin of the cluster
+
 - create the user on ubuntu
 
 ```
@@ -152,7 +154,7 @@ openssl x509 -req -in request.csr -CA kubernetes.crt -CAkey kubernetes.key -CAcr
 
 ```
 
-### set the kubernetes cluster and the context
+## 2. Set the kubernetes cluster and the context
 
 - set the cluster name and the server
 

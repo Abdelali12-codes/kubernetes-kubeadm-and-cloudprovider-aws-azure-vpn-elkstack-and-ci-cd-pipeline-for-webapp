@@ -1,0 +1,25 @@
+version: "3"
+services:
+  logstash:
+    container_name: nginx_app
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    # ports:
+    # - 80:80
+    volumes:
+      - app-volume:/var/log/nginx
+    restart: always
+    links:
+      - reactapp
+  reactapp:
+    container_name: reactapp
+    image: abdelalidocker/azure-reactjs
+    restart: always
+    ports:
+      - 80:80
+    volumes:
+      - app-volume:/var/log/nginx
+
+volumes:
+  app-volume:

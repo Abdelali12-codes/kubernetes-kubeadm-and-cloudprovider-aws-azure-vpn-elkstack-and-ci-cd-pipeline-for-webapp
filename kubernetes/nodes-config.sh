@@ -17,6 +17,7 @@ $(curl -s http://169.254.169.254/latest/meta-data/local-hostname)
 # echo "deb [signed-by=/usr/share/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list
 # install kubelet, kubeadm and kubectl 
 
+{
 sudo apt-get update && sudo apt-get install -y apt-transport-https curl
 curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
 cat <<EOF | sudo tee /etc/apt/sources.list.d/kubernetes.list
@@ -26,7 +27,7 @@ sudo apt-get update
 sudo apt-get install -y kubelet kubeadm kubectl
 sudo apt-mark hold kubelet kubeadm kubectl
 sudo apt install docker.io -y
-
+}
 
 
 sudo nano /etc/docker/daemon.json
@@ -44,8 +45,10 @@ sudo nano /etc/docker/daemon.json
 }
 
 
+{
 sudo systemctl restart docker
 sudo systemctl enable docker
+}
 
 
 # edit this file /etc/systemd/system/kubelet.service.d/10-kubeadm.conf

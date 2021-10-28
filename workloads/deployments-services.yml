@@ -18,12 +18,12 @@ spec:
         ports:
         - containerPort: 27017
         volumeMounts:
-          - mountPath: /data/db
-            name: host-volume
+        - mountPath: /data/db
+          name: host-volume
       
       volumes:
-        - name: host-volume
-          hostPath:
+      - name: host-volume
+        hostPath:
             path: /home/ubuntu/volumes
             type: DirectoryOrCreate
                                           # this the path on the worker node where your web site resie

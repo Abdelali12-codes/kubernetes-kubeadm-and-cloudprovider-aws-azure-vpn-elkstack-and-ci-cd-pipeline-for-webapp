@@ -7,7 +7,7 @@ apiServer:
   extraArgs:
     cloud-provider: external
 clusterName: kubernetes
-# controlPlaneEndpoint: classic-load-balancer-833162346.us-west-2.elb.amazonaws.com
+controlPlaneEndpoint: "ip-10-10-1-133.us-west-2.compute.internal:6443"
 controllerManager:
   extraArgs:
     cloud-provider: external
@@ -21,7 +21,7 @@ networking:
 apiVersion: kubeadm.k8s.io/v1beta3
 kind: InitConfiguration
 nodeRegistration:
-  name: ip-10-11-12-13.us-west-2.compute.internal
+  name: ip-10-10-1-186.us-west-2.compute.internal
   kubeletExtraArgs:
     cloud-provider: external
 

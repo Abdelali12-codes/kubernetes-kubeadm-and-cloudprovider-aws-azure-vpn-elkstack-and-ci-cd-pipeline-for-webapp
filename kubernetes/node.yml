@@ -1,14 +1,12 @@
-
 # create this file under /etc/kubernetes on your worker node
-apiVersion: kubeadm.k8s.io/v1beta2
+apiVersion: kubeadm.k8s.io/v1beta3
 kind: JoinConfiguration
 discovery:
   bootstrapToken:
-    token: "jtapn5.z1rwhatjelzpzsjp"
-    apiServerEndpoint: "176.24.1.234:6443"
-    caCertHashes:
-      - "sha256:5e3319063b01646d4f31bd5720941e71f6f280e6e84962f8bde2dbc838833474"
+    token: "hqu9f5.fmzb8zv3jdno2e19"
+    apiServerEndpoint: "ip-10-10-1-133.us-west-2.compute.internal:6443"
+    caCertHashes: ["sha256:117496e5bfc98460ee7a206b044b608e3c1f4b102ca34206adc0b840a425162d"]
 nodeRegistration:
-  name: ip-176-24-1-134.us-west-2.compute.internal
+  name: ip-10-10-1-113.us-west-2.compute.internal
   kubeletExtraArgs:
-    cloud-provider: aws
+    cloud-provider: external

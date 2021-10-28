@@ -1,0 +1,16 @@
+# create this file under /etc/kubernetes on your second master node 
+apiVersion: kubeadm.k8s.io/v1beta3
+kind: JoinConfiguration
+discovery:
+  bootstrapToken:
+    token: "hqu9f5.fmzb8zv3jdno2e19 "
+    apiServerEndpoint: "ip-10-10-1-133.us-west-2.compute.internal:6443"
+    caCertHashes: ["sha256:117496e5bfc98460ee7a206b044b608e3c1f4b102ca34206adc0b840a425162d"]
+nodeRegistration:
+  name: ip-10-10-1-122.us-west-2.compute.internal
+  kubeletExtraArgs:
+    cloud-provider: externel
+controlPlane:
+  localAPIEndpoint:
+    advertiseAddress: 10.10.1.122
+  certificateKey: "9739a2248782fb5c3ecf3d9f3bb58d1aae8440153eb8ddb8873760b815404c0b"

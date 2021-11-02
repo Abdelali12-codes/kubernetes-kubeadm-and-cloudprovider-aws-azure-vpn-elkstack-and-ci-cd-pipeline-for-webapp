@@ -93,8 +93,7 @@ kubeadm init --control-plane-endpoint="10.10.1.174:6443" --apiserver-advertise-a
 - if you integrated kubeadm with aws provider go to the controller.yml under kubernetes folder to join your master node to the cluster
 
 * else run the command that appear when you initiate the kubeadm
-![join-master](https://user-images.githubusercontent.com/67081878/139598621-2407bcac-bffd-44e0-9a9a-987f89861066.png)
-
+  ![join-master](https://user-images.githubusercontent.com/67081878/139598621-2407bcac-bffd-44e0-9a9a-987f89861066.png)
 
 ### 5. install the flannel network plugin on the control plane (master node in our case)
 
@@ -425,6 +424,27 @@ sudo htpasswd -c /etc/nginx/htpasswd.users kibanaadmin
 auth_basic "Restricted Access";
 auth_basic_user_file /etc/nginx/htpasswd.users;
 
+```
+
+# Kubernetes Ingress
+
+- deploy the ingress-nginx controller
+
+```
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.0.4/deploy/static/provider/baremetal/deploy.yaml
+```
+
+- if you are using windows edit the the following file
+
+```
+C:\Windows\System32\Drivers\etc\hosts
+
+```
+
+- if you are using linux edith the following file
+
+```
+/etc/hosts
 ```
 
 # Synchronize users between AWS Microsoft AD and Azure AD

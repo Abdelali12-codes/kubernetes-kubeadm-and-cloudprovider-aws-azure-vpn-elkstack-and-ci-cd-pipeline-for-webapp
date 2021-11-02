@@ -26,10 +26,11 @@ kind: Service
 metadata:
   name: ingress-webapp
 spec:
-  type: ClusterIP
+  type: NodePort
   selector:
     app: ingress
   ports:
     - protocol: TCP
       targetPort: 80
+      nodePort: 30700
       port: 80

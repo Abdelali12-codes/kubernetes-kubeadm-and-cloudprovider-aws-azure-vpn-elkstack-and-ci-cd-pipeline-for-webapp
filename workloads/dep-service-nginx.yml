@@ -42,4 +42,4 @@ spec:
     - protocol: TCP
       nodePort: 30400
       targetPort: 80
-      port: 100
+      port: 80

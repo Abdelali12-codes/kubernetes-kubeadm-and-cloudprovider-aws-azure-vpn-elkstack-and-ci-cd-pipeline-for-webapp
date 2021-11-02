@@ -46,7 +46,7 @@ sudo apt-get update && sudo apt-get install haproxy -y
 
 ```
 frontend kubernetes-frontend
-    bind 10.10.1.172:6443
+    bind 10.10.1.174:6443
     mode tcp
     option tcplog
     default_backend kubernetes-backend
@@ -55,8 +55,8 @@ backend kubernetes-backend
     mode tcp
     option tcp-check
     balance roundrobin
-    server master1 10.10.1.16:6443 check fall 3 rise 2
-    server master2 172.16.16.223:6443 check fall 3 rise 2
+    server master1 10.10.6.228:6443 check fall 3 rise 2
+    server master2 10.10.10.207:6443 check fall 3 rise 2
 
 ```
 
@@ -79,7 +79,7 @@ sudo kubeadm init --config /etc/kubernetes/aws.yml --upload-certs
 - for kubeadm without aws run below command as root
 
 ```
-kubeadm init --control-plane-endpoint="server-ip:6443" --apiserver-advertise-address= master-ip-addres --pod-network-cidr= 10.244.0.0/16 --upload-certs
+kubeadm init --control-plane-endpoint="10.10.1.174:6443" --apiserver-advertise-address=10.10.6.228 --pod-network-cidr= 10.244.0.0/16 --upload-certs
 ```
 
 ### 4. join the worker nodes and masternode to the cluster
@@ -166,6 +166,12 @@ openssl x509 -req -in request.csr -CA kubernetes.crt -CAkey kubernetes.key -CAcr
 
 ```
 
+- self-signed certificate
+
+```
+openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout ingress.key -out ingress.crt -subj "/CN=domain/O=security"
+```
+
 ## 2. Set the kubernetes cluster and the context
 
 - set the cluster name and the server
@@ -213,26 +219,34 @@ kubectl config set-cluster name-of-cluster --certificate-authority=/home/abdelal
 ## to obtain the value of certificate-jey to join your other master node to k8s cluster
 
 ```
+
 kubeadm certs certificate-key
+
 ```
 
 ## to obtain the value of --token
 
 ```
+
 kubeadm token list
 kubeadm token create
+
 ```
 
 - or
 
 ```
+
 kubeadm token create --print-join-command
+
 ```
 
 ## to obtain the the value of --discovery-token-ca-cert-hash
 
 ```
-openssl x509 -pubkey -in /etc/kubernetes/pki/ca.crt | openssl rsa -pubin -outform der 2>/dev/null | openssl dgst -sha256 -hex | sed 's/^.* //'
+
+openssl x509 -pubkey -in /etc/kubernetes/pki/ca.crt | openssl rsa -pubin -outform der 2>/dev/null | openssl dgst -sha256 -hex | sed 's/^.\* //'
+
 ```
 
 # configure the azure vm to register it to codedeploy on-premise instances
@@ -245,9 +259,9 @@ openssl x509 -pubkey -in /etc/kubernetes/pki/ca.crt | openssl rsa -pubin -outfor
 
 ```
 
-aws_access_key_id: xxxxxxxxxxxxxx
-aws_secret_access_key: xxxxxxxxxxxxxxxxxxxxxx
-iam_user_arn: arn:aws:iam::xxxxxxxxxxxxxxx:user/root
+aws_access_key_id: xxxxxxxxxxxxxxxxxxxxxxxxxxxx
+aws_secret_access_key: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+iam_user_arn: xxxxxxxxxxxxxxxxxx
 region: us-west-2
 
 ```
@@ -263,6 +277,8 @@ export AWS_REGION=us-west-2
 ## 5. install the codedeploy agent
 
 ```
+
+{
 sudo apt-get update -y
 sudo apt-get install ruby -y
 sudo apt-get install wget -y
@@ -270,6 +286,7 @@ cd /home/abdelali
 wget https://aws-codedeploy-us-east-1.s3.amazonaws.com/latest/install
 chmod +x ./install
 sudo ./install auto
+}
 
 ```
 
@@ -295,21 +312,25 @@ sudo yum install awscli -y or sudo apt install awscli -y
 - configure your user on azure vm
 
 ```
+
 aws configure
+
 ```
 
 ## 7. register azure vm to codedeploy on-premise
 
 ```
 
-aws deploy register-on-premises-instance --instance-name AssetTag12010298EX --iam-user-arn arn:aws:iam::xxxxxxxxxxxxxxx:user/root
+aws deploy register-on-premises-instance --instance-name AssetTag12010298EX --iam-user-arn arn:aws:iam::xxxxxxxxxxxxxx:user/abdelali
 
 ```
 
 ## 8. deregister azure vm from codedeploy on-premise
 
 ```
+
 aws deploy deregister-on-premises-instance --instance-name AssetTag12010298EX
+
 ```
 
 # elk stack
@@ -319,10 +340,12 @@ aws deploy deregister-on-premises-instance --instance-name AssetTag12010298EX
 - Download and install the public signing key:
 
 ```
+
 wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -
 sudo apt-get install apt-transport-https
 echo "deb https://artifacts.elastic.co/packages/7.x/apt stable main" | sudo tee /etc/apt/sources.list.d/elastic-7.x.list
 sudo apt-get update && sudo apt-get install elasticsearch
+
 ```
 
 ## kibana
@@ -378,24 +401,34 @@ bin/logstash -f /etc/logstash/conf.d/nginx.conf
 - install the below packages
 
 ```
+
 sudo add-apt-repository ppa:certbot/certbot
 sudo apt-get update
 sudo apt-get install nginx apache2-utils
 sudo apt-get install python-certbot-nginx
 sudo certbot --nginx -d my-elk-stack-vps.com
+
 ```
 
 - run the below command in the directory (/etc/nginx) and enter your password
 
 ```
+
 sudo htpasswd -c /etc/nginx/htpasswd.users kibanaadmin
+
 ```
 
 - if you are using nginx on ubuntu go under /etc/nginx/sites-enabled/default and paste the below lines
 
 ```
+
 auth_basic "Restricted Access";
 auth_basic_user_file /etc/nginx/htpasswd.users;
+
 ```
 
 # Synchronize users between AWS Microsoft AD and Azure AD
+
+```
+
+```

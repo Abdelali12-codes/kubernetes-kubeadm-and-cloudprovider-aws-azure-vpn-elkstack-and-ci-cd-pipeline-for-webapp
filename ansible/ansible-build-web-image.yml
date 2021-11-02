@@ -6,7 +6,7 @@
 
   tasks:
   - name: build image
-    command: docker build -t ingress-web .
+    command: docker build -t ingress-webapp .
     args:
        chdir: /home/azureuser/devops/web
 

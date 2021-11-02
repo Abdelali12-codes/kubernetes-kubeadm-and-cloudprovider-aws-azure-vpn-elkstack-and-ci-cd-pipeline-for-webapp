@@ -14,10 +14,10 @@
   - name: restart the nginx app deployment
     command: kubectl rollout restart deployment nginx-deployment
 
-  # - name: create the depolyments and services
-  #   command: kubectl apply -f dep-service-web.yml
-  #   args: 
-  #      chdir: /home/ubuntu/cluster
+  - name: create the depolyments and services
+    command: kubectl apply -f dep-service-web.yml
+    args: 
+       chdir: /home/ubuntu/cluster
 
-  # - name: restart the nginx app deployment
-  #   command: kubectl rollout restart deployment web-deployment
+  - name: restart the nginx app deployment
+    command: kubectl rollout restart deployment web-deployment

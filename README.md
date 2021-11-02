@@ -137,6 +137,7 @@ sudo chown $(id -u):$(id -g) $HOME/.kube/config
 
 ```
 sudo useradd -s /bin/bash -d /home/abdelali/ -m -G sudo abdelali
+
 ```
 
 - create private key for the user
@@ -177,7 +178,7 @@ openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout ingress.key -out ing
 
 ```
 
-kubectl config set-cluster name-of-cluster --server =url
+kubectl config set-cluster production --server=https://10.10.1.174:6443
 
 ```
 
@@ -185,7 +186,7 @@ kubectl config set-cluster name-of-cluster --server =url
 
 ```
 
-kubectl config set-context my-context --user abdelali --cluster name-of-cluster
+kubectl config set-context my-context --user abdelali --cluster production
 
 ```
 
@@ -201,7 +202,7 @@ kubectl config use-context my-context
 
 ```
 
-kubectl config set-credentials abdelali --client-certificate=/home/abdelali/kubernetes/abdelali.crt --client-key=/home/abdelali/kubernetes/private-key.key
+kubectl config set-credentials abdelali --client-certificate=/home/abdelali/certs/abdelali.crt --client-key=/home/abdelali/certs/private-key.key
 
 ```
 
@@ -209,7 +210,7 @@ kubectl config set-credentials abdelali --client-certificate=/home/abdelali/kube
 
 ```
 
-kubectl config set-cluster name-of-cluster --certificate-authority=/home/abdelali/kubernetes/kubernetes.crt
+kubectl config set-cluster production --certificate-authority=/home/abdelali/certs/kubernetes.crt
 
 ```
 

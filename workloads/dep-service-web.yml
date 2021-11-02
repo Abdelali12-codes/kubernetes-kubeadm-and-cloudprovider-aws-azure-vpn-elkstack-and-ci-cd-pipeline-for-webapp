@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web-deployment
+  labels:
+    app: ingress
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ingress
+  template:
+    metadata:
+      labels:
+        app: ingress
+    spec:
+      containers:
+      - name: ingress
+        image: abdelalidocker/ingress-webapp
+        ports:
+        - containerPort: 80
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: ingress-webapp
+spec:
+  type: ClusterIP
+  selector:
+    app: ingress
+  ports:
+    - protocol: TCP
+      targetPort: 80
+      port: 80

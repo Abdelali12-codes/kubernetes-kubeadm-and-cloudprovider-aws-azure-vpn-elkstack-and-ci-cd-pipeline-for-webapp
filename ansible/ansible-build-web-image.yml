@@ -1,0 +1,22 @@
+- name: build docker image and push it to dockr hub
+  hosts: local
+  become: yes 
+  become_user: azureuser
+  
+
+  tasks:
+  - name: build image
+    command: docker build -t ingress-web .
+    args:
+       chdir: /home/azureuser/devops/web
+
+  - name: tag the image
+    command: docker tag ingress-webapp abdelalidocker/ingress-webapp:latest
+
+
+  - name: push the built image to dockerhub
+    command: docker push abdelalidocker/ingress-webapp:latest
+
+
+  - name: delete the built image and the taged one
+    command: docker rmi ingress-webapp abdelalidocker/ingress-webapp:latest

@@ -88,9 +88,13 @@ kubeadm init --control-plane-endpoint="10.10.1.174:6443" --apiserver-advertise-a
 
 - else run the command that appear when you initiate the kubeadm
 
+![join-worker](https://user-images.githubusercontent.com/67081878/139598682-18279563-f563-4f79-ad34-016fad6e3656.png)
+
 - if you integrated kubeadm with aws provider go to the controller.yml under kubernetes folder to join your master node to the cluster
 
 * else run the command that appear when you initiate the kubeadm
+![join-master](https://user-images.githubusercontent.com/67081878/139598621-2407bcac-bffd-44e0-9a9a-987f89861066.png)
+
 
 ### 5. install the flannel network plugin on the control plane (master node in our case)
 

@@ -25,4 +25,5 @@ artifacts:
      - nginx/*
      - ansible/*
      - workloads/*
+     - web/**/*
      

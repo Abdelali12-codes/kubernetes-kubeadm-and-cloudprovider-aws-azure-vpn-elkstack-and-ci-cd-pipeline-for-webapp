@@ -455,3 +455,7 @@ C:\Windows\System32\Drivers\etc\hosts
 ```
 
 ```
+
+# The Project Archeticture:
+
+![aws-zure](https://user-images.githubusercontent.com/67081878/142167827-77d4ed2b-b9d4-4b4a-9a12-f194324e0183.png)
